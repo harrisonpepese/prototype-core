@@ -77,6 +77,10 @@ export default class Creature {
   }
   gainExperience(value: number) {
     this._experiencePoints += value;
+    if (this._experiencePoints >= this.experienceToLevelup) {
+      this._experiencePoints -= this.experienceToLevelup;
+      this.levelUp();
+    }
   }
   levelUp() {
     this._level++;
