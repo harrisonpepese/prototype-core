@@ -1,6 +1,6 @@
 import { ElementEnum } from "../../@shared/enums/element.enum";
 import Creature from "../entity/creature.entity";
-import { CreatureAttribute } from "../valueObjects/attribute";
+import { CreatureAttribute } from "../types/attribute";
 
 export const baseAttributeMock: CreatureAttribute = {
   strength: 5,

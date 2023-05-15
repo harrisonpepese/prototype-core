@@ -1,7 +1,8 @@
 import { ElementEnum } from "../../@shared/enums/element.enum";
+import CreatureStatus from "../classes/creatureStatus";
 import CreatureSameNameOnchangeError from "../error/sameNameOnChange.error";
-import { CreatureAttribute } from "../valueObjects/attribute";
-import { CreatureAttributePoints } from "../valueObjects/attributePoints";
+import { CreatureAttribute } from "../types/attribute";
+import { CreatureAttributePoints } from "../types/attributePoints";
 export type CreatureProps = {
   id: string;
   name: string;
@@ -68,6 +69,9 @@ export default class Creature {
   }
   public get experienceToLevelup(): number {
     return this.level * 100;
+  }
+  public get status() {
+    return new CreatureStatus(this.totalAttributes);
   }
   changeName(newName: string) {
     if (newName === this.name) {
