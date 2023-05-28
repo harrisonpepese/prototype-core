@@ -14,6 +14,9 @@ export default class CreatureBattleStatus {
   private _currentDefensePower: number;
   private _currentSpeed: number;
 
+  public get initialStatus(): CreatureStatus {
+    return this._initialStatus;
+  }
   public get currentLife(): number {
     return this._currentLife;
   }
@@ -38,14 +41,26 @@ export default class CreatureBattleStatus {
   }
   damage(value: number) {
     this._currentLife -= value;
+    if (this._currentLife < 0) {
+      this._currentLife = 0;
+    }
   }
   heal(value: number) {
     this._currentLife += value;
+    if (this._currentLife > this._initialStatus.life) {
+      this._currentLife = this._initialStatus.life;
+    }
   }
   weary(value: number) {
     this._currentStamina -= value;
+    if (this._currentStamina < 0) {
+      this._currentStamina = 0;
+    }
   }
   rest(value: number) {
     this._currentStamina += value;
+    if (this._currentStamina > this._initialStatus.stamina) {
+      this._currentStamina = this._initialStatus.stamina;
+    }
   }
 }

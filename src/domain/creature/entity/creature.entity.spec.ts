@@ -1,63 +1,76 @@
+import CreatureStatus from "../classes/creatureStatus";
 import CreatureSameNameOnchangeError from "../error/sameNameOnChange.error";
 import { creatureMock } from "../mocks/entity.mock";
+import Creature from "./creature.entity";
 
 describe("User entity tests", () => {
+  const creature = new Creature(creatureMock);
   it("change name", () => {
     const name = "name";
-    creatureMock.changeName(name);
-    expect(creatureMock.name).toBe(name);
+    creature.changeName(name);
+    expect(creature.name).toBe(name);
   });
   it("change name error", () => {
     try {
       const name = "name";
-      creatureMock.changeName(name);
+      creature.changeName(name);
       expect(true).toBeFalsy();
     } catch (error) {
       expect(error).toEqual(CreatureSameNameOnchangeError);
     }
   });
+  it("getters", () => {
+    expect(creature.id).toBe(creatureMock.id);
+    expect(creature.element).toBe(creatureMock.element);
+  });
+
   it("gainExperience", () => {
     const xpToGain = 30;
-    const currentXp = creatureMock.experiencePoints;
-    creatureMock.gainExperience(xpToGain);
-    expect(creatureMock.experiencePoints).toBe(currentXp + xpToGain);
+    const currentXp = creature.experiencePoints;
+    creature.gainExperience(xpToGain);
+    expect(creature.experiencePoints).toBe(currentXp + xpToGain);
   });
+
+  it("gainExperience and level up", () => {
+    const currentlevel = creature.level;
+    creature.gainExperience(currentlevel * 100);
+    expect(creature.level).toBe(currentlevel + 1);
+  });
+  it("Status", () => {
+    const status = creature.status;
+    expect(status).toStrictEqual(new CreatureStatus(creature.totalAttributes));
+  });
+
   it("levelUp", () => {
-    const currentlevel = creatureMock.level;
-    const totalAttrPoints = creatureMock.attributePoints.total;
-    const avaliableAttrPoints = creatureMock.attributePoints.avaliable;
-    creatureMock.levelUp();
-    expect(creatureMock.level).toBe(currentlevel + 1);
-    expect(creatureMock.attributePoints.total).toBe(totalAttrPoints + 1);
-    expect(creatureMock.attributePoints.avaliable).toBe(
-      avaliableAttrPoints + 1
-    );
+    const currentlevel = creature.level;
+    const totalAttrPoints = creature.attributePoints.total;
+    const avaliableAttrPoints = creature.attributePoints.avaliable;
+    creature.levelUp();
+    expect(creature.level).toBe(currentlevel + 1);
+    expect(creature.attributePoints.total).toBe(totalAttrPoints + 1);
+    expect(creature.attributePoints.avaliable).toBe(avaliableAttrPoints + 1);
   });
   it("useAttributePoints", () => {
-    const currentselectabeattribute =
-      creatureMock.selectableAttributes.strength;
-    const currentTotalPointsattribute = creatureMock.totalAttributes.strength;
-    const avaliableAttrPoints = creatureMock.attributePoints.avaliable;
-    creatureMock.useAttributePoints("strength");
-    expect(creatureMock.selectableAttributes.strength).toBe(
+    const currentselectabeattribute = creature.selectableAttributes.strength;
+    const currentTotalPointsattribute = creature.totalAttributes.strength;
+    const avaliableAttrPoints = creature.attributePoints.avaliable;
+    creature.useAttributePoints("strength");
+    expect(creature.selectableAttributes.strength).toBe(
       currentselectabeattribute + 1
     );
-    expect(creatureMock.totalAttributes.strength).toBe(
+    expect(creature.totalAttributes.strength).toBe(
       currentTotalPointsattribute + 1
     );
-    expect(creatureMock.attributePoints.avaliable).toBe(
-      avaliableAttrPoints - 1
-    );
+    expect(creature.attributePoints.avaliable).toBe(avaliableAttrPoints - 1);
   });
   it("resetAttributePoints", () => {
-    const avaliableAttrPoints = creatureMock.attributePoints.avaliable;
-    creatureMock.resetAttributePoints();
-    expect(creatureMock.selectableAttributes.strength).toBe(0);
-    expect(creatureMock.totalAttributes.strength).toBe(
-      creatureMock.baseAttribute.strength
+    creature.resetAttributePoints();
+    expect(creature.selectableAttributes.strength).toBe(0);
+    expect(creature.totalAttributes.strength).toBe(
+      creature.baseAttribute.strength
     );
-    expect(creatureMock.attributePoints.avaliable).toBe(
-      creatureMock.attributePoints.total
+    expect(creature.attributePoints.avaliable).toBe(
+      creature.attributePoints.total
     );
   });
 });

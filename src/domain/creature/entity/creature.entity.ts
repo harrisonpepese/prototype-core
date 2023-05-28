@@ -19,6 +19,7 @@ export default class Creature {
       this._id = init.id;
       this._name = init.name;
       this._experiencePoints = init.experiencePoints;
+      this._level = init.level;
       this._element = init.element;
       this._attributePoints = init.attributePoints;
       this._baseAttribute = init.baseAttribute;

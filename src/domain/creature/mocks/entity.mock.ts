@@ -1,5 +1,5 @@
 import { ElementEnum } from "../../@shared/enums/element.enum";
-import Creature from "../entity/creature.entity";
+import { CreatureProps } from "../entity/creature.entity";
 import { CreatureAttribute } from "../types/attribute";
 
 export const baseAttributeMock: CreatureAttribute = {
@@ -9,7 +9,7 @@ export const baseAttributeMock: CreatureAttribute = {
   agility: 5,
   vitality: 5,
 };
-export const creatureMock: Creature = new Creature({
+export const creatureMock: CreatureProps = {
   id: "mongodb_hash",
   name: "creature",
   experiencePoints: 20,
@@ -27,4 +27,4 @@ export const creatureMock: Creature = new Creature({
     agility: 0,
     vitality: 0,
   },
-});
+};
